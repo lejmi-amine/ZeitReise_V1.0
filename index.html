@@ -5,6 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zeitreise: Software Engineering Geschichte</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Tab Navigation Styles */
+      .navigation-tabs {
+        display: flex;
+        justify-content: center;
+        margin: 2rem 0;
+        background: white;
+        border-radius: 50px;
+        padding: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .tab-link {
+        padding: 1rem 2rem;
+        border: none;
+        background: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s;
+        flex: 1;
+        font-weight: 600;
+      }
+
+      .tab-link.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Quiz Intro Styles */
+      .quiz-intro {
+        text-align: center;
+        padding: 3rem 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .quiz-intro h2 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+      }
+
+      .quiz-intro p {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 2rem;
+      }
+
+      .quiz-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        margin: 3rem 0;
+        flex-wrap: wrap;
+      }
+
+      .quiz-start-btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 1.2rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .quiz-start-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.3);
+      }
+
+      .qr-section {
+        text-align: center;
+      }
+
+      .qr-placeholder {
+        width: 150px;
+        height: 150px;
+        background: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: #6c757d;
+      }
+
+      .leaderboard-preview {
+        margin-top: 3rem;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 15px;
+        text-align: left;
+      }
+
+      .leaderboard-preview h3 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+      }
+
+      .leaderboard-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .leaderboard-item:last-child {
+        border-bottom: none;
+      }
+
+      .leaderboard-rank {
+        font-weight: bold;
+        color: #667eea;
+        min-width: 30px;
+      }
+
+      .leaderboard-name {
+        flex: 1;
+        margin: 0 1rem;
+      }
+
+      .leaderboard-score {
+        font-weight: bold;
+        color: #28a745;
+      }
+
+      @media (max-width: 768px) {
+        .quiz-actions {
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .navigation-tabs {
+          flex-direction: column;
+          border-radius: 15px;
+        }
+
+        .tab-link {
+          border-radius: 10px;
+          margin: 0.25rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="progress-bar"></div>
@@ -20,546 +183,595 @@
         </p>
       </header>
 
-      <div class="timeline-container">
-        <div class="timeline">
-          <!-- Meilenstein 1 -->
-          <div class="milestone left">
-            <div class="year">1940er–1950er</div>
-            <h3>Die Geburt der Programmierung</h3>
-            <p>
-              Grace Hopper entwickelte den ersten Compiler und legte den
-              Grundstein für moderne Programmiersprachen.
-            </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Abstraktion von Hardware und Beginn
-              der Softwareentwicklung.
-            </div>
+      <!-- Navigation Tabs -->
+      <div class="navigation-tabs">
+        <button class="tab-link active" onclick="openTab('timeline')">
+          📅 Timeline
+        </button>
+        <button class="tab-link" onclick="openTab('quiz')">
+          🏆 Quiz Challenge
+        </button>
+      </div>
 
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="1">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="1">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-1">
-              <div class="quiz-question">
-                Wer entwickelte den ersten Compiler?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="true">Grace Hopper</div>
-                <div class="quiz-option" data-correct="false">Alan Turing</div>
-                <div class="quiz-option" data-correct="false">
-                  John von Neumann
-                </div>
-                <div class="quiz-option" data-correct="false">Bill Gates</div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-1">
-              <video width="100%" controls>
-                <source src="videos/epoche1.mp4" type="video/mp4" />
-                <source src="videos/epoche1.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Die Geburt der Programmierung - Von Maschinensprache zu
-                Compilern
+      <!-- Timeline Tab -->
+      <div id="timeline" class="tab-content active">
+        <div class="timeline-container">
+          <div class="timeline">
+            <!-- Meilenstein 1 -->
+            <div class="milestone left">
+              <div class="year">1940er–1950er</div>
+              <h3>Die Geburt der Programmierung</h3>
+              <p>
+                Grace Hopper entwickelte den ersten Compiler und legte den
+                Grundstein für moderne Programmiersprachen.
               </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Abstraktion von Hardware und Beginn
+                der Softwareentwicklung.
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="1">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="1">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-1">
+                <div class="quiz-question">
+                  Wer entwickelte den ersten Compiler?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="true">
+                    Grace Hopper
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Alan Turing
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    John von Neumann
+                  </div>
+                  <div class="quiz-option" data-correct="false">Bill Gates</div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-1">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/hJGrrLiNKIw"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Die Geburt der Programmierung - Von Maschinensprache zu
+                  Compilern
+                </p>
+              </div>
+            </div>
+
+            <!-- Meilenstein 2 - NATO-Report 1968 -->
+            <div class="milestone right">
+              <div class="year">1968</div>
+              <h3>
+                Der NATO-Report: Die Geburt des Begriffs "Software Engineering"
+              </h3>
+              <p>
+                Die NATO-Konferenz in Garmisch-Partenkirchen prägte den Begriff
+                "Software Engineering" als Antwort auf die wachsende
+                Softwarekrise (zu teuer, zu unzuverlässig, zu spät).
+              </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Erstmals wurde Softwareentwicklung
+                als ingenieurwissenschaftliche Disziplin verstanden – mit Fokus
+                auf Methodik, Planung und Qualität.
+              </div>
+              <div class="fun-fact">
+                <strong>Fun Fact:</strong> Der Begriff war ursprünglich
+                provokant gemeint – viele hielten Software damals nicht für
+                "ingenieurfähig".
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="2">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="2">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-2">
+                <div class="quiz-question">
+                  Was war der Hauptauslöser für die Softwarekrise?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="false">
+                    Zu wenige Programmierer
+                  </div>
+                  <div class="quiz-option" data-correct="true">
+                    Komplexität von Softwareprojekten
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Fehlende Hardware
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Internetausfälle
+                  </div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-2">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/SWswEjHT-3g"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Die Softwarekrise - Wie Chaos zur Disziplin führte
+                </p>
+              </div>
+            </div>
+
+            <!-- Meilenstein 3 - David Parnas' Prinzip des "Information Hiding" -->
+            <div class="milestone left">
+              <div class="year">1972</div>
+              <h3>David Parnas' Prinzip des "Information Hiding"</h3>
+              <p>
+                In seinem Beitrag "On the Criteria To Be Used in Decomposing
+                Systems into Modules" formulierte Parnas die Kernidee: Module
+                sollten ihre Implementierungsdetails verbergen – Schnittstellen
+                zählen mehr als interne Struktur.
+              </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Der Geburtsmoment der
+                Modularisierung und objektorientierten Prinzipien.
+              </div>
+              <div class="fun-fact">
+                <strong>Weniger bekannt:</strong> Parnas lehnte später manche
+                Aspekte von OOP ab – weil sie seine Prinzipien "zu sehr
+                verwässert" hätten.
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="3">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="3">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-3">
+                <div class="quiz-question">
+                  Was ist das Kernprinzip von "Information Hiding"?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="false">
+                    Alle Details sollten dokumentiert werden
+                  </div>
+                  <div class="quiz-option" data-correct="true">
+                    Module sollten Implementierungsdetails verbergen
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Code sollte verschlüsselt werden
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Datenbanken sollten versteckt werden
+                  </div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-3">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/AofmpiE4FSI"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Information Hiding - Die Grundlage der Modularisierung
+                </p>
+              </div>
+            </div>
+
+            <!-- Meilenstein 4 - Der "Mythical Man-Month" -->
+            <div class="milestone right">
+              <div class="year">1975</div>
+              <h3>Der "Mythical Man-Month" von Fred Brooks</h3>
+              <p>
+                In seinem bahnbrechenden Buch "The Mythical Man-Month"
+                formulierte Fred Brooks die zentrale Aussage: "Adding manpower
+                to a late software project makes it later."
+              </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Legte die Grundlage für modernes
+                Projektmanagement in der Softwareentwicklung (Teamdynamik,
+                Aufwandsschätzung, Kommunikation).
+              </div>
+              <div class="fun-fact">
+                <strong>Weniger bekannt:</strong> Brooks war Projektleiter bei
+                IBM OS/360 – einem Projekt, das selbst grandios scheiterte und
+                daraus viele Lehren zog.
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="4">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="4">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-4">
+                <div class="quiz-question">
+                  Welche Aussage ist zentral im "Mythical Man-Month"?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="false">
+                    Mehr Entwickler = schnellere Fertigstellung
+                  </div>
+                  <div class="quiz-option" data-correct="true">
+                    Mehr Entwickler bei einem verspäteten Projekt machen es noch
+                    später
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Man sollte nur im Monat arbeiten
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Mythen sind wichtig für die Softwareentwicklung
+                  </div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-4">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/wfceivtnsak"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Der Mythical Man-Month - Warum mehr Entwickler nicht immer
+                  helfen
+                </p>
+              </div>
+            </div>
+
+            <!-- Meilenstein 5 - Cleanroom Software Engineering -->
+            <div class="milestone left">
+              <div class="year">1970er-1980er</div>
+              <h3>Das "Cleanroom Software Engineering"-Konzept</h3>
+              <p>
+                Harlan Mills (IBM) entwickelte das Cleanroom-Konzept: Software
+                wird formal spezifiziert, mathematisch überprüft und erst ganz
+                am Ende getestet ("wie ein Reinraum in der
+                Mikrochip-Herstellung").
+              </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Frühform von formaler Verifikation
+                und Zero-Defect Development – Grundlagen für
+                sicherheitskritische Systeme (z. B. NASA, Flugsteuerung).
+              </div>
+              <div class="fun-fact">
+                <strong>Weniger bekannt:</strong> Wird heute noch in
+                sicherheitszertifizierten Systemen (DO-178C, IEC 61508)
+                angewendet.
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="5">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="5">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-5">
+                <div class="quiz-question">
+                  Was charakterisiert Cleanroom Software Engineering?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="false">
+                    Häufiges Testen während der Entwicklung
+                  </div>
+                  <div class="quiz-option" data-correct="true">
+                    Formale Spezifikation und spätes Testen
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Entwicklung in sterilen Umgebungen
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Nur für Reinraum-Mikrochip-Produktion geeignet
+                  </div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-5">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/m7SVZhGz4iw"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Cleanroom Engineering - Formale Verifikation für sichere
+                  Systeme
+                </p>
+              </div>
+            </div>
+
+            <!-- Meilenstein 6 - Continuous Integration -->
+            <div class="milestone right">
+              <div class="year">1990er</div>
+              <h3>Die Einführung der Continuous Integration (CI)</h3>
+              <p>
+                Grady Booch & Rational Software entwickelten das Konzept der
+                Continuous Integration: Entwickler integrieren Code regelmäßig
+                in ein gemeinsames Repository, um Integrationsprobleme früh zu
+                erkennen.
+              </p>
+              <div class="importance">
+                <strong>Bedeutung:</strong> Grundstein für heutige DevOps- und
+                CI/CD-Pipelines.
+              </div>
+              <div class="fun-fact">
+                <strong>Weniger bekannt:</strong> CI war ursprünglich Teil des
+                Booch Methodology-Frameworks – lange bevor Jenkins & GitHub
+                Actions existierten.
+              </div>
+
+              <div class="button-row">
+                <button class="show-quiz" data-quiz="6">
+                  Quiz zu diesem Meilenstein
+                </button>
+                <button class="show-video" data-video="6">
+                  🎥 Video zu dieser Epoche
+                </button>
+              </div>
+
+              <div class="quiz-container" id="quiz-6">
+                <div class="quiz-question">
+                  Was ist der Hauptvorteil von Continuous Integration?
+                </div>
+                <div class="quiz-options">
+                  <div class="quiz-option" data-correct="false">
+                    Niedrigere Programmierkosten
+                  </div>
+                  <div class="quiz-option" data-correct="true">
+                    Frühes Erkennen von Integrationsproblemen
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Schnellere Compiler
+                  </div>
+                  <div class="quiz-option" data-correct="false">
+                    Bessere Programmiersprachen
+                  </div>
+                </div>
+                <div class="quiz-result"></div>
+                <div class="button-container"></div>
+              </div>
+
+              <div class="video-container" id="video-6">
+                <div class="youtube-embed">
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src="https://www.youtube.com/embed/yWzOCMZnp6g"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  >
+                  </iframe>
+                </div>
+                <p class="video-caption">
+                  Continuous Integration - Die Grundlage moderner
+                  DevOps-Pipelines
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="future-milestones">
+          <h2>Zukünftige Meilensteine</h2>
+          <div class="future-container">
+            <!-- Zukunfts-Meilensteine bleiben gleich -->
+            <div class="future-milestone">
+              <h3>Vollständig autonome Softwareentwicklung durch KI-Agenten</h3>
+              <p>
+                Künstliche Intelligenzen werden in der Lage sein, komplette
+                Softwaresysteme eigenständig zu konzipieren, zu programmieren,
+                zu testen und zu deployen. Entwickler:innen übernehmen dabei vor
+                allem die Rolle von Kurator:innen und Ethik-Gatekeepern.
+              </p>
+              <div>
+                <strong>Bedeutung:</strong> Entwicklungszyklen verkürzen sich
+                drastisch (von Monaten auf Stunden oder Minuten). Die Qualität
+                der Software steigt durch kontinuierliches selbstoptimierendes
+                Testing. Menschliche Kreativität konzentriert sich auf
+                Problemanalyse und Systemdesign, nicht mehr auf
+                Implementierungsdetails.
+              </div>
+              <div class="button-row">
+                <button class="show-video" data-video="future1">
+                  🎥 Video zu autonomer Entwicklung
+                </button>
+              </div>
+            </div>
+
+            <div class="future-milestone">
+              <h3>Globale, selbstregulierende Software-Ökosysteme</h3>
+              <p>
+                Software wird sich zunehmend als lebendes Ökosystem verstehen:
+                Anwendungen kommunizieren autonom miteinander, erkennen
+                Interdependenzen und optimieren sich gegenseitig – ähnlich wie
+                biologische Systeme.
+              </p>
+              <div>
+                <strong>Bedeutung:</strong> Systeme reagieren in Echtzeit auf
+                globale Datenflüsse (z. B. Energie, Verkehr, Gesundheit).
+                Softwarefehler werden automatisch kompensiert oder repariert,
+                bevor sie entstehen. Das Konzept "Deployment" verschwindet, da
+                Software permanent im Fluss bleibt.
+              </div>
+              <div class="button-row">
+                <button class="show-video" data-video="future2">
+                  🎥 Video zu Software-Ökosystemen
+                </button>
+              </div>
+            </div>
+
+            <div class="future-milestone">
+              <h3>Neuroadaptive Schnittstellen und Code aus Gedanken</h3>
+              <p>
+                Durch direkte neuronale Interfaces können Entwickler:innen (und
+                später auch Laien) Software allein durch Gedanken und
+                Intentionen steuern oder erstellen.
+              </p>
+              <div>
+                <strong>Bedeutung:</strong> Barriere zwischen Mensch und
+                Maschine löst sich weitgehend auf. Programmierung wird zur
+                intuitiven, kreativen Tätigkeit. Entsteht die Ära des "Cognitive
+                Engineering" – Software als Erweiterung des menschlichen
+                Geistes.
+              </div>
+              <div class="button-row">
+                <button class="show-video" data-video="future3">
+                  🎥 Video zu neuroadaptiven Schnittstellen
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- Meilenstein 2 - NATO-Report 1968 -->
-          <div class="milestone right">
-            <div class="year">1968</div>
-            <h3>
-              Der NATO-Report: Die Geburt des Begriffs "Software Engineering"
-            </h3>
-            <p>
-              Die NATO-Konferenz in Garmisch-Partenkirchen prägte den Begriff
-              "Software Engineering" als Antwort auf die wachsende Softwarekrise
-              (zu teuer, zu unzuverlässig, zu spät).
+          <!-- Video Container für zukünftige Meilensteine -->
+          <div class="video-container" id="video-future1">
+            <div class="youtube-embed">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/r7b-jz4M09w"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <p class="video-caption">
+              Autonome KI-Entwicklung - Wenn Maschinen eigene Software schreiben
             </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Erstmals wurde Softwareentwicklung als
-              ingenieurwissenschaftliche Disziplin verstanden – mit Fokus auf
-              Methodik, Planung und Qualität.
-            </div>
-            <div class="fun-fact">
-              <strong>Fun Fact:</strong> Der Begriff war ursprünglich provokant
-              gemeint – viele hielten Software damals nicht für
-              "ingenieurfähig".
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="2">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="2">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-2">
-              <div class="quiz-question">
-                Was war der Hauptauslöser für die Softwarekrise?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="false">
-                  Zu wenige Programmierer
-                </div>
-                <div class="quiz-option" data-correct="true">
-                  Komplexität von Softwareprojekten
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Fehlende Hardware
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Internetausfälle
-                </div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-2">
-              <video width="100%" controls>
-                <source src="videos/epoche2.mp4" type="video/mp4" />
-                <source src="videos/epoche2.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Die Softwarekrise - Wie Chaos zur Disziplin führte
-              </p>
-            </div>
           </div>
 
-          <!-- Meilenstein 3 - David Parnas' Prinzip des "Information Hiding" -->
-          <div class="milestone left">
-            <div class="year">1972</div>
-            <h3>David Parnas' Prinzip des "Information Hiding"</h3>
-            <p>
-              In seinem Beitrag "On the Criteria To Be Used in Decomposing
-              Systems into Modules" formulierte Parnas die Kernidee: Module
-              sollten ihre Implementierungsdetails verbergen – Schnittstellen
-              zählen mehr als interne Struktur.
+          <div class="video-container" id="video-future2">
+            <div class="youtube-embed">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/ECeKlPyKUng"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <p class="video-caption">
+              Selbstregulierende Ökosysteme - Software als lebendes System
             </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Der Geburtsmoment der Modularisierung
-              und objektorientierten Prinzipien.
-            </div>
-            <div class="fun-fact">
-              <strong>Weniger bekannt:</strong> Parnas lehnte später manche
-              Aspekte von OOP ab – weil sie seine Prinzipien "zu sehr
-              verwässert" hätten.
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="3">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="3">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-3">
-              <div class="quiz-question">
-                Was ist das Kernprinzip von "Information Hiding"?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="false">
-                  Alle Details sollten dokumentiert werden
-                </div>
-                <div class="quiz-option" data-correct="true">
-                  Module sollten Implementierungsdetails verbergen
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Code sollte verschlüsselt werden
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Datenbanken sollten versteckt werden
-                </div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-3">
-              <video width="100%" controls>
-                <source src="videos/epoche3.mp4" type="video/mp4" />
-                <source src="videos/epoche3.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Information Hiding - Die Grundlage der Modularisierung
-              </p>
-            </div>
           </div>
 
-          <!-- Meilenstein 4 - Der "Mythical Man-Month" -->
-          <div class="milestone right">
-            <div class="year">1975</div>
-            <h3>Der "Mythical Man-Month" von Fred Brooks</h3>
-            <p>
-              In seinem bahnbrechenden Buch "The Mythical Man-Month" formulierte
-              Fred Brooks die zentrale Aussage: "Adding manpower to a late
-              software project makes it later."
+          <div class="video-container" id="video-future3">
+            <div class="youtube-embed">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/MDBtgwE_0-E"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <p class="video-caption">
+              Neuroadaptive Schnittstellen - Programmieren mit Gedankenkraft
             </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Legte die Grundlage für modernes
-              Projektmanagement in der Softwareentwicklung (Teamdynamik,
-              Aufwandsschätzung, Kommunikation).
-            </div>
-            <div class="fun-fact">
-              <strong>Weniger bekannt:</strong> Brooks war Projektleiter bei IBM
-              OS/360 – einem Projekt, das selbst grandios scheiterte und daraus
-              viele Lehren zog.
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="4">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="4">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-4">
-              <div class="quiz-question">
-                Welche Aussage ist zentral im "Mythical Man-Month"?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="false">
-                  Mehr Entwickler = schnellere Fertigstellung
-                </div>
-                <div class="quiz-option" data-correct="true">
-                  Mehr Entwickler bei einem verspäteten Projekt machen es noch
-                  später
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Man sollte nur im Monat arbeiten
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Mythen sind wichtig für die Softwareentwicklung
-                </div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-4">
-              <video width="100%" controls>
-                <source src="videos/epoche4.mp4" type="video/mp4" />
-                <source src="videos/epoche4.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Der Mythical Man-Month - Warum mehr Entwickler nicht immer
-                helfen
-              </p>
-            </div>
-          </div>
-
-          <!-- Meilenstein 5 - Cleanroom Software Engineering -->
-          <div class="milestone left">
-            <div class="year">1970er-1980er</div>
-            <h3>Das "Cleanroom Software Engineering"-Konzept</h3>
-            <p>
-              Harlan Mills (IBM) entwickelte das Cleanroom-Konzept: Software
-              wird formal spezifiziert, mathematisch überprüft und erst ganz am
-              Ende getestet ("wie ein Reinraum in der Mikrochip-Herstellung").
-            </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Frühform von formaler Verifikation und
-              Zero-Defect Development – Grundlagen für sicherheitskritische
-              Systeme (z. B. NASA, Flugsteuerung).
-            </div>
-            <div class="fun-fact">
-              <strong>Weniger bekannt:</strong> Wird heute noch in
-              sicherheitszertifizierten Systemen (DO-178C, IEC 61508)
-              angewendet.
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="5">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="5">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-5">
-              <div class="quiz-question">
-                Was charakterisiert Cleanroom Software Engineering?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="false">
-                  Häufiges Testen während der Entwicklung
-                </div>
-                <div class="quiz-option" data-correct="true">
-                  Formale Spezifikation und spätes Testen
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Entwicklung in sterilen Umgebungen
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Nur für Reinraum-Mikrochip-Produktion geeignet
-                </div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-5">
-              <video width="100%" controls>
-                <source src="videos/epoche5.mp4" type="video/mp4" />
-                <source src="videos/epoche5.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Cleanroom Engineering - Formale Verifikation für sichere Systeme
-              </p>
-            </div>
-          </div>
-
-          <!-- Meilenstein 6 - Continuous Integration -->
-          <div class="milestone right">
-            <div class="year">1990er</div>
-            <h3>Die Einführung der Continuous Integration (CI)</h3>
-            <p>
-              Grady Booch & Rational Software entwickelten das Konzept der
-              Continuous Integration: Entwickler integrieren Code regelmäßig in
-              ein gemeinsames Repository, um Integrationsprobleme früh zu
-              erkennen.
-            </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> Grundstein für heutige DevOps- und
-              CI/CD-Pipelines.
-            </div>
-            <div class="fun-fact">
-              <strong>Weniger bekannt:</strong> CI war ursprünglich Teil des
-              Booch Methodology-Frameworks – lange bevor Jenkins & GitHub
-              Actions existierten.
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="6">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="6">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-6">
-              <div class="quiz-question">
-                Was ist der Hauptvorteil von Continuous Integration?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="false">
-                  Niedrigere Programmierkosten
-                </div>
-                <div class="quiz-option" data-correct="true">
-                  Frühes Erkennen von Integrationsproblemen
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Schnellere Compiler
-                </div>
-                <div class="quiz-option" data-correct="false">
-                  Bessere Programmiersprachen
-                </div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-6">
-              <video width="100%" controls>
-                <source src="videos/epoche6.mp4" type="video/mp4" />
-                <source src="videos/epoche6.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                Continuous Integration - Die Grundlage moderner DevOps-Pipelines
-              </p>
-            </div>
-          </div>
-
-          <!-- Meilenstein 7 - KI-Revolution in der Softwareentwicklung -->
-          <div class="milestone left">
-            <div class="year">2022</div>
-            <h3>Die KI-Revolution wird für alle zugänglich</h3>
-            <p>
-              Mit der Veröffentlichung von ChatGPT im November 2022 wurde
-              KI-gestützte Softwareentwicklung erstmals für die breite Masse
-              verfügbar. Millionen von Entwicklern begannen, KI-Tools für
-              Code-Generierung, Debugging und Dokumentation zu nutzen.
-            </p>
-            <div class="importance">
-              <strong>Bedeutung:</strong> KI-Assistenten wurden zum Mainstream -
-              von Hobby-Programmierern bis zu Enterprise-Entwicklern nutzten
-              plötzlich alle dieselben mächtigen Tools, was die Produktivität
-              revolutionierte.
-            </div>
-            <div class="fun-fact">
-              <strong>Weniger bekannt:</strong> Obwohl GitHub Copilot bereits
-              2021 launched wurde, war es ChatGPT, das die KI-Revolution
-              wirklich demokratisierte und für über 100 Millionen User
-              zugänglich machte.
-            </div>
-
-            <div class="button-row">
-              <button class="show-quiz" data-quiz="7">
-                Quiz zu diesem Meilenstein
-              </button>
-              <button class="show-video" data-video="7">
-                🎥 Video zu dieser Epoche
-              </button>
-            </div>
-
-            <div class="quiz-container" id="quiz-7">
-              <div class="quiz-question">
-                Welches Tool machte KI-gestützte Entwicklung 2022 erstmals für
-                die Massen verfügbar?
-              </div>
-              <div class="quiz-options">
-                <div class="quiz-option" data-correct="true">ChatGPT</div>
-                <div class="quiz-option" data-correct="false">
-                  GitHub Copilot
-                </div>
-                <div class="quiz-option" data-correct="false">GPT-2</div>
-                <div class="quiz-option" data-correct="false">AlphaGo</div>
-              </div>
-              <div class="quiz-result"></div>
-              <div class="button-container"></div>
-            </div>
-
-            <div class="video-container" id="video-7">
-              <video width="100%" controls>
-                <source src="videos/epoche7.mp4" type="video/mp4" />
-                <source src="videos/epoche7.webm" type="video/webm" />
-                Dein Browser unterstützt das Video-Tag nicht.
-              </video>
-              <p class="video-caption">
-                KI-Demokratisierung - Wie ChatGPT die Softwareentwicklung für
-                alle veränderte
-              </p>
-            </div>
           </div>
         </div>
       </div>
 
-      <div class="future-milestones">
-        <h2>Zukünftige Meilensteine</h2>
-        <div class="future-container">
-          <!-- Neuer Zukunfts-Meilenstein 1 -->
-          <div class="future-milestone">
-            <h3>Vollständig autonome Softwareentwicklung durch KI-Agenten</h3>
-            <p>
-              Künstliche Intelligenzen werden in der Lage sein, komplette
-              Softwaresysteme eigenständig zu konzipieren, zu programmieren, zu
-              testen und zu deployen. Entwickler:innen übernehmen dabei vor
-              allem die Rolle von Kurator:innen und Ethik-Gatekeepern.
-            </p>
-            <div>
-              <strong>Bedeutung:</strong> Entwicklungszyklen verkürzen sich
-              drastisch (von Monaten auf Stunden oder Minuten). Die Qualität der
-              Software steigt durch kontinuierliches selbstoptimierendes
-              Testing. Menschliche Kreativität konzentriert sich auf
-              Problemanalyse und Systemdesign, nicht mehr auf
-              Implementierungsdetails.
-            </div>
-            <div class="button-row">
-              <button class="show-video" data-video="future1">
-                🎥 Video zu autonomer Entwicklung
-              </button>
+      <!-- Quiz Tab -->
+      <div id="quiz" class="tab-content">
+        <div class="quiz-intro">
+          <h2>🎯 Software Engineering Quiz Challenge</h2>
+          <p>
+            Teste dein Wissen über die Geschichte des Software Engineering und
+            tritt gegen deine Kommilitonen an!
+          </p>
+
+          <div class="quiz-actions">
+            <a href="quiz.html" class="quiz-start-btn"> 🚀 Quiz starten </a>
+
+            <div class="qr-section">
+              <div class="qr-placeholder">
+                <p>QR Code für:<br />quiz.html</p>
+              </div>
+              <p><small>Scan mich mit deinem Handy!</small></p>
             </div>
           </div>
 
-          <!-- Neuer Zukunfts-Meilenstein 2 -->
-          <div class="future-milestone">
-            <h3>Globale, selbstregulierende Software-Ökosysteme</h3>
-            <p>
-              Software wird sich zunehmend als lebendes Ökosystem verstehen:
-              Anwendungen kommunizieren autonom miteinander, erkennen
-              Interdependenzen und optimieren sich gegenseitig – ähnlich wie
-              biologische Systeme.
-            </p>
-            <div>
-              <strong>Bedeutung:</strong> Systeme reagieren in Echtzeit auf
-              globale Datenflüsse (z. B. Energie, Verkehr, Gesundheit).
-              Softwarefehler werden automatisch kompensiert oder repariert,
-              bevor sie entstehen. Das Konzept "Deployment" verschwindet, da
-              Software permanent im Fluss bleibt.
-            </div>
-            <div class="button-row">
-              <button class="show-video" data-video="future2">
-                🎥 Video zu Software-Ökosystemen
-              </button>
+          <div class="leaderboard-preview">
+            <h3>🏆 Aktuelle Bestenliste</h3>
+            <div id="leaderboard-preview">
+              <!-- Wird dynamisch gefüllt -->
             </div>
           </div>
-
-          <!-- Neuer Zukunfts-Meilenstein 3 -->
-          <div class="future-milestone">
-            <h3>Neuroadaptive Schnittstellen und Code aus Gedanken</h3>
-            <p>
-              Durch direkte neuronale Interfaces können Entwickler:innen (und
-              später auch Laien) Software allein durch Gedanken und Intentionen
-              steuern oder erstellen.
-            </p>
-            <div>
-              <strong>Bedeutung:</strong> Barriere zwischen Mensch und Maschine
-              löst sich weitgehend auf. Programmierung wird zur intuitiven,
-              kreativen Tätigkeit. Entsteht die Ära des "Cognitive Engineering"
-              – Software als Erweiterung des menschlichen Geistes.
-            </div>
-            <div class="button-row">
-              <button class="show-video" data-video="future3">
-                🎥 Video zu neuroadaptiven Schnittstellen
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Video Container für zukünftige Meilensteine -->
-        <div class="video-container" id="video-future1">
-          <video width="100%" controls>
-            <source src="videos/zukunft1.mp4" type="video/mp4" />
-            <source src="videos/zukunft1.webm" type="video/webm" />
-            Dein Browser unterstützt das Video-Tag nicht.
-          </video>
-          <p class="video-caption">
-            Autonome KI-Entwicklung - Wenn Maschinen eigene Software schreiben
-          </p>
-        </div>
-
-        <div class="video-container" id="video-future2">
-          <video width="100%" controls>
-            <source src="videos/zukunft2.mp4" type="video/mp4" />
-            <source src="videos/zukunft2.webm" type="video/webm" />
-            Dein Browser unterstützt das Video-Tag nicht.
-          </video>
-          <p class="video-caption">
-            Selbstregulierende Ökosysteme - Software als lebendes System
-          </p>
-        </div>
-
-        <div class="video-container" id="video-future3">
-          <video width="100%" controls>
-            <source src="videos/zukunft3.mp4" type="video/mp4" />
-            <source src="videos/zukunft3.webm" type="video/webm" />
-            Dein Browser unterstützt das Video-Tag nicht.
-          </video>
-          <p class="video-caption">
-            Neuroadaptive Schnittstellen - Programmieren mit Gedankenkraft
-          </p>
         </div>
       </div>
 
@@ -571,5 +783,58 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // Tab Navigation Funktion
+      function openTab(tabName) {
+        // Tab Inhalte verstecken
+        document.querySelectorAll(".tab-content").forEach((tab) => {
+          tab.classList.remove("active");
+        });
+
+        // Tab Links deaktivieren
+        document.querySelectorAll(".tab-link").forEach((link) => {
+          link.classList.remove("active");
+        });
+
+        // Gewählten Tab anzeigen
+        document.getElementById(tabName).classList.add("active");
+        event.currentTarget.classList.add("active");
+
+        // Leaderboard für Quiz Tab aktualisieren
+        if (tabName === "quiz") {
+          updateLeaderboardPreview();
+        }
+      }
+
+      // Leaderboard Vorschau
+      function updateLeaderboardPreview() {
+        const scores = JSON.parse(localStorage.getItem("quizScores")) || [];
+        const preview = document.getElementById("leaderboard-preview");
+
+        if (scores.length === 0) {
+          preview.innerHTML =
+            '<p style="text-align: center; color: #6c757d;">Noch keine Ergebnisse. Sei der Erste! 🏆</p>';
+          return;
+        }
+
+        const topScores = scores.slice(0, 5); // Top 5 anzeigen
+        preview.innerHTML = topScores
+          .map(
+            (score, index) => `
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank">#${index + 1}</div>
+            <div class="leaderboard-name">${score.name}</div>
+            <div class="leaderboard-score">${score.percentage}%</div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      // Initialisiere Leaderboard wenn Seite lädt
+      document.addEventListener("DOMContentLoaded", function () {
+        updateLeaderboardPreview();
+      });
+    </script>
   </body>
 </html>
