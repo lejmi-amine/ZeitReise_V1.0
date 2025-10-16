@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zeitreise: Software Engineering Geschichte</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="progress-bar"></div>
+    <button id="theme-toggle">🪩 Theme wechseln</button>
+
+    <div class="container">
+      <header>
+        <div class="team-name">Team Zeitmaschine</div>
+        <h1>Zeitreise durch die Software-Engineering-Geschichte</h1>
+        <p>
+          Eine interaktive Reise durch die Meilensteine der Softwareentwicklung
+          – von den Anfängen bis in die Zukunft
+        </p>
+      </header>
+
+      <div class="timeline-container">
+        <div class="timeline">
+          <!-- Meilenstein 1 -->
+          <div class="milestone left">
+            <div class="year">1940er–1950er</div>
+            <h3>Die Geburt der Programmierung</h3>
+            <p>
+              Grace Hopper entwickelte den ersten Compiler und legte den
+              Grundstein für moderne Programmiersprachen.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Abstraktion von Hardware und Beginn
+              der Softwareentwicklung.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="1">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="1">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-1">
+              <div class="quiz-question">
+                Wer entwickelte den ersten Compiler?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="true">Grace Hopper</div>
+                <div class="quiz-option" data-correct="false">Alan Turing</div>
+                <div class="quiz-option" data-correct="false">
+                  John von Neumann
+                </div>
+                <div class="quiz-option" data-correct="false">Bill Gates</div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-1">
+              <video width="100%" controls>
+                <source src="videos/epoche1.mp4" type="video/mp4" />
+                <source src="videos/epoche1.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Die Geburt der Programmierung - Von Maschinensprache zu
+                Compilern
+              </p>
+            </div>
+          </div>
+
+          <!-- Meilenstein 2 -->
+          <div class="milestone right">
+            <div class="year">1968</div>
+            <h3>Die Softwarekrise & "Software Engineering"</h3>
+            <p>
+              Die NATO-Konferenz in Garmisch-Partenkirchen prägte den Begriff
+              "Software Engineering" als Antwort auf die wachsende Komplexität
+              von Softwareprojekten.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Etablierte Softwareentwicklung als
+              Ingenieursdisziplin mit systematischen Methoden.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="2">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="2">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-2">
+              <div class="quiz-question">
+                Was war der Hauptauslöser für die Softwarekrise?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="false">
+                  Zu wenige Programmierer
+                </div>
+                <div class="quiz-option" data-correct="true">
+                  Komplexität von Softwareprojekten
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  Fehlende Hardware
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  Internetausfälle
+                </div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-2">
+              <video width="100%" controls>
+                <source src="videos/epoche2.mp4" type="video/mp4" />
+                <source src="videos/epoche2.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Die Softwarekrise - Wie Chaos zur Disziplin führte
+              </p>
+            </div>
+          </div>
+
+          <!-- Meilenstein 3 -->
+          <div class="milestone left">
+            <div class="year">1970er</div>
+            <h3>Strukturierte Programmierung und Wasserfallmodell</h3>
+            <p>
+              Edsger Dijkstra und andere förderten die strukturierte
+              Programmierung, während Royce das Wasserfallmodell als linearen
+              Softwareentwicklungsprozess beschrieb.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Schuf Grundlagen für systematische
+              Softwareentwicklung und Projektmanagement.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="3">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="3">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-3">
+              <div class="quiz-question">
+                Wer gilt als Pionier der strukturierten Programmierung?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="true">
+                  Edsger Dijkstra
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  Linus Torvalds
+                </div>
+                <div class="quiz-option" data-correct="false">Steve Jobs</div>
+                <div class="quiz-option" data-correct="false">
+                  Tim Berners-Lee
+                </div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-3">
+              <video width="100%" controls>
+                <source src="videos/epoche3.mp4" type="video/mp4" />
+                <source src="videos/epoche3.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Strukturierte Programmierung - Von Chaos zu klaren Strukturen
+              </p>
+            </div>
+          </div>
+
+          <!-- Meilenstein 4 -->
+          <div class="milestone right">
+            <div class="year">1980er-1990er</div>
+            <h3>Objektorientierte Programmierung und das Internet</h3>
+            <p>
+              Sprachen wie C++ und Java popularisierten die objektorientierte
+              Programmierung. Gleichzeitig entstand das World Wide Web, das die
+              Softwareentwicklung revolutionierte.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Objektorientierung ermöglichte bessere
+              Wartbarkeit, das Internet schuf völlig neue Anwendungsbereiche.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="4">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="4">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-4">
+              <div class="quiz-question">
+                Welche Sprache gilt als Pionier der Objektorientierung?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="false">Python</div>
+                <div class="quiz-option" data-correct="false">JavaScript</div>
+                <div class="quiz-option" data-correct="true">C++</div>
+                <div class="quiz-option" data-correct="false">PHP</div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-4">
+              <video width="100%" controls>
+                <source src="videos/epoche4.mp4" type="video/mp4" />
+                <source src="videos/epoche4.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Objektorientierung & Internet - Die digitale Revolution
+              </p>
+            </div>
+          </div>
+
+          <!-- Meilenstein 5 -->
+          <div class="milestone left">
+            <div class="year">2001</div>
+            <h3>Agiles Manifest</h3>
+            <p>
+              17 Softwareentwickler veröffentlichten das Agile Manifest, das
+              iterative Entwicklung, Kundenkollaboration und Reagieren auf
+              Veränderungen über umfassender Dokumentation und starren Plänen
+              stellte.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Revolutionierte
+              Softwareentwicklungsprozesse und ist bis heute prägend für moderne
+              Entwicklungsteams.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="5">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="5">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-5">
+              <div class="quiz-question">
+                Wie viele Entwickler unterzeichneten das Agile Manifest?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="false">10</div>
+                <div class="quiz-option" data-correct="true">17</div>
+                <div class="quiz-option" data-correct="false">25</div>
+                <div class="quiz-option" data-correct="false">5</div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-5">
+              <video width="100%" controls>
+                <source src="videos/epoche5.mp4" type="video/mp4" />
+                <source src="videos/epoche5.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Das Agile Manifest - Von starren Plänen zu flexiblen Prozessen
+              </p>
+            </div>
+          </div>
+
+          <!-- Meilenstein 6 -->
+          <div class="milestone right">
+            <div class="year">2010er-Heute</div>
+            <h3>Cloud Computing und DevOps</h3>
+            <p>
+              Die Verlagerung von Software in die Cloud und die Verschmelzung
+              von Entwicklung und Betrieb (DevOps) ermöglichen kontinuierliche
+              Bereitstellung und Skalierbarkeit.
+            </p>
+            <div class="importance">
+              <strong>Bedeutung:</strong> Ermöglichte globale Zusammenarbeit,
+              Skalierbarkeit und schnellere Softwarebereitstellung.
+            </div>
+
+            <div class="button-row">
+              <button class="show-quiz" data-quiz="6">
+                Quiz zu diesem Meilenstein
+              </button>
+              <button class="show-video" data-video="6">
+                🎥 Video zu dieser Epoche
+              </button>
+            </div>
+
+            <div class="quiz-container" id="quiz-6">
+              <div class="quiz-question">
+                Was ist ein Hauptvorteil von Cloud Computing?
+              </div>
+              <div class="quiz-options">
+                <div class="quiz-option" data-correct="false">
+                  Niedrigere Programmierkosten
+                </div>
+                <div class="quiz-option" data-correct="true">
+                  Skalierbarkeit
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  Schnellere Compiler
+                </div>
+                <div class="quiz-option" data-correct="false">
+                  Bessere Programmiersprachen
+                </div>
+              </div>
+              <div class="quiz-result"></div>
+              <div class="button-container"></div>
+            </div>
+
+            <div class="video-container" id="video-6">
+              <video width="100%" controls>
+                <source src="videos/epoche6.mp4" type="video/mp4" />
+                <source src="videos/epoche6.webm" type="video/webm" />
+                Dein Browser unterstützt das Video-Tag nicht.
+              </video>
+              <p class="video-caption">
+                Cloud & DevOps - Die Ära der kontinuierlichen Bereitstellung
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="future-milestones">
+        <h2>Zukünftige Meilensteine</h2>
+        <div class="future-container">
+          <div class="future-milestone">
+            <h3>KI-gestützte Softwareentwicklung</h3>
+            <p>
+              KI wird ganze Systeme entwerfen, testen und warten. Entwickler
+              werden zu KI-Trainern.
+            </p>
+          </div>
+          <div class="future-milestone">
+            <h3>Quantencomputing für alle</h3>
+            <p>
+              Neue Algorithmen, neue Paradigmen – Quantensoftware-Engineering
+              entsteht.
+            </p>
+          </div>
+          <div class="future-milestone">
+            <h3>Autonome Software-Systeme</h3>
+            <p>
+              Software, die sich selbst repariert und optimiert – „Living
+              Software"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p id="score-text">
+          Team Zeitmaschine | DHBW Software Engineering 2025/26 | Score: 0
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
