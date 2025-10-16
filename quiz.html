@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Software Engineering Quiz - Team DIE letzte Reihe!</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .team-name {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .quiz-system {
+        padding: 2rem;
+        min-height: 400px;
+      }
+
+      .user-info {
+        display: flex;
+        gap: 1rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+      }
+
+      .user-info input {
+        padding: 1rem;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        flex: 1;
+        min-width: 200px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .user-info input:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      .start-quiz-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1.2rem 2.5rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin: 1rem 0 2rem;
+        width: 100%;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .start-quiz-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .quiz-progress {
+        margin: 2rem 0;
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        width: 0%;
+        transition: width 0.3s;
+      }
+
+      .question-container {
+        display: block;
+        margin: 2rem 0;
+        padding: 1.5rem;
+        background: white;
+        border: 2px solid #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .question-text {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+      }
+
+      .options-container {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .option {
+        padding: 1rem 1.5rem;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+        background: white;
+        font-size: 1rem;
+      }
+
+      .option:hover {
+        border-color: #667eea;
+        background: #f8f9ff;
+        transform: translateY(-2px);
+      }
+
+      .option.correct {
+        background: #d4edda;
+        border-color: #28a745;
+        color: #155724;
+      }
+
+      .option.incorrect {
+        background: #f8d7da;
+        border-color: #dc3545;
+        color: #721c24;
+      }
+
+      .navigation-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .nav-btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        flex: 1;
+        transition: all 0.3s;
+      }
+
+      .prev-btn {
+        background: #6c757d;
+        color: white;
+      }
+
+      .prev-btn:hover {
+        background: #5a6268;
+      }
+
+      .next-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+      }
+
+      .results-container {
+        display: none;
+        margin-top: 2rem;
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 15px;
+        text-align: center;
+        border: 2px solid #e9ecef;
+      }
+
+      .results-container.active {
+        display: block;
+      }
+
+      .score-display {
+        font-size: 3rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 1rem 0;
+      }
+
+      .score-text {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-bottom: 2rem;
+      }
+
+      .leaderboard {
+        margin-top: 3rem;
+        text-align: left;
+      }
+
+      .leaderboard h3 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+      }
+
+      .leaderboard table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .leaderboard th,
+      .leaderboard td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .leaderboard th {
+        background: #2c3e50;
+        color: white;
+        font-weight: 600;
+      }
+
+      .leaderboard tr:nth-child(even) {
+        background: #f8f9fa;
+      }
+
+      .leaderboard tr:hover {
+        background: #e9ecef;
+      }
+
+      .leaderboard .rank-1 {
+        background: #fff3cd !important;
+      }
+
+      .leaderboard .rank-2 {
+        background: #e2e3e5 !important;
+      }
+
+      .leaderboard .rank-3 {
+        background: #f8d7da !important;
+      }
+
+      .restart-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        border: none;
+        padding: 1.2rem 2.5rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        margin-top: 2rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .restart-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: #f8f9fa;
+        color: #6c757d;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .user-info {
+          flex-direction: column;
+        }
+
+        .user-info input {
+          min-width: 100%;
+        }
+
+        .navigation-buttons {
+          flex-direction: column;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .question-text {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="team-name">Team DIE letzte Reihe!</div>
+        <h1>Software Engineering Quiz</h1>
+        <p class="subtitle">
+          Teste dein Wissen über die Geschichte des Software Engineering
+        </p>
+      </header>
+
+      <div class="quiz-system">
+        <!-- User Info -->
+        <div class="user-info" id="user-info">
+          <input
+            type="text"
+            id="user-name"
+            placeholder="👤 Dein Name"
+            required
+          />
+          <input
+            type="email"
+            id="user-email"
+            placeholder="📧 Deine E-Mail (optional)"
+          />
+        </div>
+
+        <button
+          class="start-quiz-btn"
+          id="start-quiz-btn"
+          onclick="startQuiz()"
+        >
+          🚀 Quiz starten
+        </button>
+
+        <!-- Quiz Progress -->
+        <div class="quiz-progress hidden" id="quiz-progress">
+          <div>Fortschritt: <span id="progress-text">0/6</span></div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questions-container"></div>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation-buttons hidden" id="navigation-buttons">
+          <button class="nav-btn prev-btn" onclick="previousQuestion()">
+            ⬅️ Zurück
+          </button>
+          <button class="nav-btn next-btn" onclick="nextQuestion()">
+            Weiter ➡️
+          </button>
+        </div>
+
+        <!-- Results Container -->
+        <div class="results-container" id="results-container">
+          <h2>🎉 Quiz abgeschlossen!</h2>
+          <div class="score-display" id="score-display">0%</div>
+          <div class="score-text" id="score-text"></div>
+
+          <div class="leaderboard">
+            <h3>🏆 Bestenliste</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Platz</th>
+                  <th>Name</th>
+                  <th>Punkte</th>
+                  <th>Datum</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body">
+                <!-- Leaderboard wird dynamisch gefüllt -->
+              </tbody>
+            </table>
+          </div>
+
+          <button class="restart-btn" onclick="restartQuiz()">
+            🔄 Quiz neu starten
+          </button>
+        </div>
+      </div>
+
+      <footer>
+        <p>Team DIE letzte Reihe! | DHBW Software Engineering 2025/26</p>
+      </footer>
+    </div>
+
+    <script>
+      // Quiz-Fragen
+      const quizQuestions = [
+        {
+          id: 1,
+          question: "Wer entwickelte den ersten Compiler?",
+          options: [
+            "Grace Hopper",
+            "Alan Turing",
+            "John von Neumann",
+            "Bill Gates",
+          ],
+          correctAnswer: 0,
+        },
+        {
+          id: 2,
+          question: "Was war der Hauptauslöser für die Softwarekrise?",
+          options: [
+            "Zu wenige Programmierer",
+            "Komplexität von Softwareprojekten",
+            "Fehlende Hardware",
+            "Internetausfälle",
+          ],
+          correctAnswer: 1,
+        },
+        {
+          id: 3,
+          question: "Was ist das Kernprinzip von 'Information Hiding'?",
+          options: [
+            "Alle Details sollten dokumentiert werden",
+            "Module sollten Implementierungsdetails verbergen",
+            "Code sollte verschlüsselt werden",
+            "Datenbanken sollten versteckt werden",
+          ],
+          correctAnswer: 1,
+        },
+        {
+          id: 4,
+          question: "Welche Aussage ist zentral im 'Mythical Man-Month'?",
+          options: [
+            "Mehr Entwickler = schneller Fertigstellung",
+            "Mehr Entwickler bei einem verspäteten Projekt machen es noch später",
+            "Man sollte nur im Monat arbeiten",
+            "Mythen sind wichtig für die Softwareentwicklung",
+          ],
+          correctAnswer: 1,
+        },
+        {
+          id: 5,
+          question: "Was charakterisiert Cleanroom Software Engineering?",
+          options: [
+            "Häufiges Testen während der Entwicklung",
+            "Formale Spezifikation und spätes Testen",
+            "Entwicklung in sterilen Umgebungen",
+            "Nur für Reinraum-Mikrochip-Produktion geeignet",
+          ],
+          correctAnswer: 1,
+        },
+        {
+          id: 6,
+          question: "Was ist der Hauptvorteil von Continuous Integration?",
+          options: [
+            "Niedrigere Programmierkosten",
+            "Frühes Erkennen von Integrationsproblemen",
+            "Schnellere Compiler",
+            "Bessere Programmiersprachen",
+          ],
+          correctAnswer: 1,
+        },
+      ];
+
+      class QuizManager {
+        constructor() {
+          this.scores = JSON.parse(localStorage.getItem("quizScores")) || [];
+          this.currentQuestion = 0;
+          this.userAnswers = new Array(quizQuestions.length).fill(null);
+          this.userName = "";
+          this.userEmail = "";
+        }
+
+        startQuiz(name, email) {
+          this.userName = name;
+          this.userEmail = email;
+          this.currentQuestion = 0;
+          this.userAnswers.fill(null);
+        }
+
+        answerQuestion(questionIndex, answerIndex) {
+          this.userAnswers[questionIndex] = answerIndex;
+        }
+
+        calculateScore() {
+          const correctAnswers = this.userAnswers.filter((answer, index) => {
+            return answer === quizQuestions[index].correctAnswer;
+          }).length;
+
+          return {
+            name: this.userName,
+            email: this.userEmail,
+            score: correctAnswers,
+            total: quizQuestions.length,
+            percentage: Math.round(
+              (correctAnswers / quizQuestions.length) * 100
+            ),
+            date: new Date().toLocaleString("de-DE"),
+            timestamp: Date.now(),
+          };
+        }
+
+        saveScore(finalScore) {
+          this.scores.push(finalScore);
+          this.scores.sort(
+            (a, b) => b.percentage - a.percentage || b.score - a.score
+          );
+          this.scores = this.scores.slice(0, 10);
+          localStorage.setItem("quizScores", JSON.stringify(this.scores));
+        }
+
+        getLeaderboard() {
+          return this.scores;
+        }
+      }
+
+      const quizManager = new QuizManager();
+      let currentQuestionIndex = 0;
+
+      function startQuiz() {
+        const userName = document.getElementById("user-name").value.trim();
+        const userEmail = document.getElementById("user-email").value.trim();
+
+        if (!userName) {
+          alert("Bitte gib deinen Namen ein!");
+          return;
+        }
+
+        quizManager.startQuiz(userName, userEmail);
+
+        // UI anpassen
+        document.getElementById("user-info").classList.add("hidden");
+        document.getElementById("start-quiz-btn").classList.add("hidden");
+        document.getElementById("quiz-progress").classList.remove("hidden");
+        document
+          .getElementById("navigation-buttons")
+          .classList.remove("hidden");
+        document.getElementById("results-container").classList.remove("active");
+
+        showQuestion(0);
+        updateProgress();
+      }
+
+      function showQuestion(index) {
+        currentQuestionIndex = index;
+        const question = quizQuestions[index];
+        const container = document.getElementById("questions-container");
+
+        container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-text">${question.question}</div>
+                    <div class="options-container">
+                        ${question.options
+                          .map(
+                            (option, optIndex) => `
+                            <div class="option" onclick="selectAnswer(${index}, ${optIndex})">
+                                ${option}
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                </div>
+            `;
+
+        const previousAnswer = quizManager.userAnswers[index];
+        if (previousAnswer !== null) {
+          highlightAnswer(index, previousAnswer);
+        }
+
+        updateNavigation();
+        updateProgress();
+      }
+
+      function selectAnswer(questionIndex, answerIndex) {
+        quizManager.answerQuestion(questionIndex, answerIndex);
+        highlightAnswer(questionIndex, answerIndex);
+
+        setTimeout(() => {
+          if (currentQuestionIndex < quizQuestions.length - 1) {
+            nextQuestion();
+          } else {
+            finishQuiz();
+          }
+        }, 1000);
+      }
+
+      function highlightAnswer(questionIndex, answerIndex) {
+        const options = document.querySelectorAll(".option");
+        const question = quizQuestions[questionIndex];
+
+        options.forEach((option, optIndex) => {
+          option.classList.remove("correct", "incorrect");
+          if (optIndex === question.correctAnswer) {
+            option.classList.add("correct");
+          } else if (
+            optIndex === answerIndex &&
+            answerIndex !== question.correctAnswer
+          ) {
+            option.classList.add("incorrect");
+          }
+          option.style.pointerEvents = "none";
+        });
+      }
+
+      function nextQuestion() {
+        if (currentQuestionIndex < quizQuestions.length - 1) {
+          showQuestion(currentQuestionIndex + 1);
+        } else {
+          finishQuiz();
+        }
+      }
+
+      function previousQuestion() {
+        if (currentQuestionIndex > 0) {
+          showQuestion(currentQuestionIndex - 1);
+        }
+      }
+
+      function updateNavigation() {
+        const prevBtn = document.querySelector(".prev-btn");
+        const nextBtn = document.querySelector(".next-btn");
+
+        prevBtn.style.visibility =
+          currentQuestionIndex > 0 ? "visible" : "hidden";
+
+        if (currentQuestionIndex === quizQuestions.length - 1) {
+          nextBtn.textContent = "Quiz beenden 🏁";
+        } else {
+          nextBtn.textContent = "Weiter ➡️";
+        }
+      }
+
+      function updateProgress() {
+        const progressText = document.getElementById("progress-text");
+        const progressFill = document.getElementById("progress-fill");
+
+        const progress =
+          ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+        progressText.textContent = `${currentQuestionIndex + 1}/${
+          quizQuestions.length
+        }`;
+        progressFill.style.width = `${progress}%`;
+      }
+
+      function finishQuiz() {
+        const finalScore = quizManager.calculateScore();
+        quizManager.saveScore(finalScore);
+
+        // Alles ausblenden und nur Ergebnisse zeigen
+        document.getElementById("quiz-progress").classList.add("hidden");
+        document.getElementById("questions-container").classList.add("hidden");
+        document.getElementById("navigation-buttons").classList.add("hidden");
+
+        // Ergebnisse anzeigen
+        const resultsContainer = document.getElementById("results-container");
+        const scoreDisplay = document.getElementById("score-display");
+        const scoreText = document.getElementById("score-text");
+
+        scoreDisplay.textContent = `${finalScore.percentage}%`;
+        scoreText.textContent = `${finalScore.name}, du hast ${finalScore.score} von ${finalScore.total} Fragen richtig beantwortet!`;
+
+        updateLeaderboard();
+        resultsContainer.classList.add("active");
+
+        resultsContainer.scrollIntoView({ behavior: "smooth" });
+      }
+
+      function updateLeaderboard() {
+        const leaderboard = quizManager.getLeaderboard();
+        const leaderboardBody = document.getElementById("leaderboard-body");
+
+        leaderboardBody.innerHTML = "";
+
+        if (leaderboard.length === 0) {
+          leaderboardBody.innerHTML =
+            '<tr><td colspan="4" style="text-align: center; color: #6c757d;">Noch keine Ergebnisse</td></tr>';
+          return;
+        }
+
+        leaderboard.forEach((score, index) => {
+          const row = document.createElement("tr");
+          if (index === 0) row.classList.add("rank-1");
+          if (index === 1) row.classList.add("rank-2");
+          if (index === 2) row.classList.add("rank-3");
+
+          row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${score.name}</td>
+                    <td>${score.score}/${score.total} (${
+            score.percentage
+          }%)</td>
+                    <td>${score.date}</td>
+                `;
+          leaderboardBody.appendChild(row);
+        });
+      }
+
+      function restartQuiz() {
+        // Zurück zum Start
+        document.getElementById("results-container").classList.remove("active");
+        document.getElementById("user-info").classList.remove("hidden");
+        document.getElementById("start-quiz-btn").classList.remove("hidden");
+        document.getElementById("questions-container").innerHTML = "";
+
+        // Formular zurücksetzen
+        document.getElementById("user-name").value = "";
+        document.getElementById("user-email").value = "";
+      }
+
+      // Initialisiere Leaderboard wenn Seite lädt
+      document.addEventListener("DOMContentLoaded", function () {
+        updateLeaderboard();
+      });
+    </script>
+  </body>
+</html>
