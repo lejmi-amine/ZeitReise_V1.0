@@ -378,12 +378,23 @@ header p {
   max-width: 1000px;
   margin: 0 auto;
 }
+.future-year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .future-milestone {
   background: rgba(255, 255, 255, 0.1);
   padding: 25px;
   border-radius: 10px;
   flex: 1;
+  margin-top: 10px;
+  margin-bottom: 20px;
   min-width: 250px;
   max-width: 300px;
   backdrop-filter: blur(10px);
@@ -403,6 +414,7 @@ header p {
 
 .future-milestone p {
   line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 footer {
