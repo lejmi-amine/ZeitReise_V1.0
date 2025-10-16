@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Quiz Logik
+  // Quiz Logik - GEFIXTE VERSION
   document.querySelectorAll(".quiz-option").forEach((option) => {
     option.addEventListener("click", function () {
       const quizContainer = this.closest(".quiz-container");
@@ -92,17 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const buttonContainer = quizContainer.querySelector(".button-container");
       const options = quizContainer.querySelectorAll(".quiz-option");
 
-      // Markiere Antworten
-      options.forEach((opt) => {
-        if (opt.getAttribute("data-correct") === "true") {
-          opt.classList.add("correct");
-        } else {
-          opt.classList.add("incorrect");
-        }
-        opt.style.pointerEvents = "none";
-      });
-
       if (isCorrect) {
+        // Richtige Antwort - zeige alle als Feedback
+        options.forEach((opt) => {
+          if (opt.getAttribute("data-correct") === "true") {
+            opt.classList.add("correct");
+          } else {
+            opt.classList.add("incorrect");
+          }
+          opt.style.pointerEvents = "none";
+        });
+
         quizResult.textContent = "✅ Richtig! Gut gemacht!";
         quizResult.classList.add("correct");
 
@@ -160,6 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
           });
         }
       } else {
+        // Falsche Antwort - nur diese Option als falsch markieren
+        this.classList.add("incorrect");
         quizResult.textContent = "❌ Leider falsch. Versuch es nochmal!";
         quizResult.classList.add("incorrect");
 
@@ -170,13 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
           buttonContainer.appendChild(retry);
 
           retry.addEventListener("click", () => {
-            options.forEach((opt) => {
-              opt.classList.remove("correct", "incorrect");
-              opt.style.pointerEvents = "auto";
-            });
+            // Reset nur diese falsche Antwort
+            this.classList.remove("incorrect");
             quizResult.textContent = "";
             quizResult.classList.remove("incorrect");
             buttonContainer.innerHTML = "";
+            // Pointer Events bleiben aktiv für alle Optionen
           });
         }
       }
