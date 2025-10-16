@@ -11,6 +11,58 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   milestones.forEach((m) => observer.observe(m));
 
+  // Tab Navigation
+  function openTab(tabName) {
+    // Tab Inhalte verstecken
+    document.querySelectorAll(".tab-content").forEach((tab) => {
+      tab.classList.remove("active");
+    });
+
+    // Tab Links deaktivieren
+    document.querySelectorAll(".tab-link").forEach((link) => {
+      link.classList.remove("active");
+    });
+
+    // Gewählten Tab anzeigen
+    document.getElementById(tabName).classList.add("active");
+    event.currentTarget.classList.add("active");
+
+    // Fortschrittsbalken für Timeline Tab neu berechnen
+    if (tabName === "timeline") {
+      updateProgressBar();
+    }
+
+    // Leaderboard für Quiz Tab aktualisieren
+    if (tabName === "quiz") {
+      updateLeaderboardPreview();
+    }
+  }
+
+  // Leaderboard Vorschau
+  function updateLeaderboardPreview() {
+    const scores = JSON.parse(localStorage.getItem("quizScores")) || [];
+    const preview = document.getElementById("leaderboard-preview");
+
+    if (scores.length === 0) {
+      preview.innerHTML =
+        '<p style="text-align: center; color: #6c757d;">Noch keine Ergebnisse. Sei der Erste! 🏆</p>';
+      return;
+    }
+
+    const topScores = scores.slice(0, 5); // Top 5 anzeigen
+    preview.innerHTML = topScores
+      .map(
+        (score, index) => `
+        <div class="leaderboard-item">
+            <div class="leaderboard-rank">#${index + 1}</div>
+            <div class="leaderboard-name">${score.name}</div>
+            <div class="leaderboard-score">${score.percentage}%</div>
+        </div>
+    `
+      )
+      .join("");
+  }
+
   // Progress Bar
   window.addEventListener("scroll", () => {
     const scroll = window.scrollY;
