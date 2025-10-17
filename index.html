@@ -151,6 +151,12 @@
         color: #28a745;
       }
 
+      /* NEU: Versteckt die Quiz- und Video-Container standardmäßig */
+      .quiz-container,
+      .video-container {
+        display: none;
+      }
+
       @media (max-width: 768px) {
         .quiz-actions {
           flex-direction: column;
@@ -182,21 +188,18 @@
         </p>
       </header>
 
-      <!-- Navigation Tabs -->
       <div class="navigation-tabs">
-        <button class="tab-link active" onclick="openTab('timeline')">
+        <button class="tab-link active" onclick="openTab(event, 'timeline')">
           📅 Timeline
         </button>
-        <button class="tab-link" onclick="openTab('quiz')">
+        <button class="tab-link" onclick="openTab(event, 'quiz')">
           🏆 Quiz Challenge
         </button>
       </div>
 
-      <!-- Timeline Tab -->
       <div id="timeline" class="tab-content active">
         <div class="timeline-container">
           <div class="timeline">
-            <!-- Meilenstein 1 -->
             <div class="milestone left">
               <div class="year">1940er–1950er</div>
               <h3>Die Geburt der Programmierung</h3>
@@ -258,7 +261,6 @@
               </div>
             </div>
 
-            <!-- Meilenstein 2 - NATO-Report 1968 -->
             <div class="milestone right">
               <div class="year">1968</div>
               <h3>
@@ -330,7 +332,6 @@
               </div>
             </div>
 
-            <!-- Meilenstein 3 - David Parnas' Prinzip des "Information Hiding" -->
             <div class="milestone left">
               <div class="year">1972</div>
               <h3>David Parnas' Prinzip des "Information Hiding"</h3>
@@ -400,7 +401,6 @@
               </div>
             </div>
 
-            <!-- Meilenstein 4 - Der "Mythical Man-Month" -->
             <div class="milestone right">
               <div class="year">1975</div>
               <h3>Der "Mythical Man-Month" von Fred Brooks</h3>
@@ -472,7 +472,6 @@
               </div>
             </div>
 
-            <!-- Meilenstein 5 - Cleanroom Software Engineering -->
             <div class="milestone left">
               <div class="year">1970er-1980er</div>
               <h3>Das "Cleanroom Software Engineering"-Konzept</h3>
@@ -544,7 +543,6 @@
               </div>
             </div>
 
-            <!-- Meilenstein 6 - Continuous Integration -->
             <div class="milestone right">
               <div class="year">1990er</div>
               <h3>Die Einführung der Continuous Integration (CI)</h3>
@@ -620,7 +618,6 @@
         <div class="future-milestones">
           <h2>Zukünftige Meilensteine</h2>
           <div class="future-container">
-            <!-- Zukunfts-Meilensteine bleiben gleich -->
             <div class="future-milestone">
               <h3>Vollständig autonome Softwareentwicklung durch KI-Agenten</h3>
               <p>
@@ -688,7 +685,6 @@
             </div>
           </div>
 
-          <!-- Video Container für zukünftige Meilensteine -->
           <div class="video-container" id="video-future1">
             <div class="youtube-embed">
               <iframe
@@ -745,7 +741,6 @@
         </div>
       </div>
 
-      <!-- Quiz Tab -->
       <div id="quiz" class="tab-content">
         <div class="quiz-intro">
           <h2>🎯 Software Engineering Quiz Challenge</h2>
@@ -759,7 +754,12 @@
 
             <div class="qr-section">
               <div class="qr-placeholder">
-                <img src="QUIZ_QR.png" alt="QR Code" style="width: 150px; height: 150px; border-radius: 10px;">
+                <img
+                  src="QUIZ_QR.png"
+                  alt="QR Code zum Quiz"
+                  width="150"
+                  height="150"
+                />
               </div>
               <p><small>Scan mich mit deinem Handy!</small></p>
             </div>
@@ -767,9 +767,7 @@
 
           <div class="leaderboard-preview">
             <h3>🏆 Aktuelle Bestenliste</h3>
-            <div id="leaderboard-preview">
-              <!-- Wird dynamisch gefüllt -->
-            </div>
+            <div id="leaderboard-preview"></div>
           </div>
         </div>
       </div>
@@ -783,8 +781,10 @@
 
     <script src="script.js"></script>
     <script>
+      // KORRIGIERTER UND ERGÄNZTER SCRIPT-BEREICH
+
       // Tab Navigation Funktion
-      function openTab(tabName) {
+      function openTab(event, tabName) {
         // Tab Inhalte verstecken
         document.querySelectorAll(".tab-content").forEach((tab) => {
           tab.classList.remove("active");
@@ -795,7 +795,7 @@
           link.classList.remove("active");
         });
 
-        // Gewählten Tab anzeigen
+        // Gewählten Tab anzeigen und Button als aktiv markieren
         document.getElementById(tabName).classList.add("active");
         event.currentTarget.classList.add("active");
 
@@ -830,12 +830,54 @@
           .join("");
       }
 
-      // Initialisiere Leaderboard wenn Seite lädt
+      // NEU: Funktion zum Umschalten von Quiz und Video
+      function setupToggleButtons() {
+        // Event Listener für "Quiz anzeigen" Buttons
+        document.querySelectorAll(".show-quiz").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const quizId = event.currentTarget.dataset.quiz;
+            const quizContainer = document.getElementById(`quiz-${quizId}`);
+            const videoContainer = document.getElementById(`video-${quizId}`);
+
+            // Verstecke das Video, falls es offen ist
+            if (videoContainer) {
+              videoContainer.style.display = "none";
+            }
+
+            // Schalte die Sichtbarkeit des Quiz um
+            if (quizContainer) {
+              const isVisible = quizContainer.style.display === "block";
+              quizContainer.style.display = isVisible ? "none" : "block";
+            }
+          });
+        });
+
+        // Event Listener für "Video anzeigen" Buttons
+        document.querySelectorAll(".show-video").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const videoId = event.currentTarget.dataset.video;
+            const videoContainer = document.getElementById(`video-${videoId}`);
+            const quizContainer = document.getElementById(`quiz-${videoId}`);
+
+            // Verstecke das Quiz, falls es offen ist
+            if (quizContainer) {
+              quizContainer.style.display = "none";
+            }
+
+            // Schalte die Sichtbarkeit des Videos um
+            if (videoContainer) {
+              const isVisible = videoContainer.style.display === "block";
+              videoContainer.style.display = isVisible ? "none" : "block";
+            }
+          });
+        });
+      }
+
+      // Initialisiere Leaderboard und Buttons, wenn Seite lädt
       document.addEventListener("DOMContentLoaded", function () {
         updateLeaderboardPreview();
+        setupToggleButtons(); // Die neue Funktion aufrufen
       });
     </script>
   </body>
 </html>
-
-
